@@ -57,6 +57,11 @@
             } else {
                 $.video_box.css({'width': w_h*(1920/1080)+'px','height': w_h+'px','margin': -0.5*w_h+'px 0px 0px '+(-0.5*w_h*(1920/1080))+'px'});
             }
+            if(w_w < 980) {
+                $.Body.css({'font-size': 100*(w_w/980)+'%'});
+            } else {
+                $.Body.css({'font-size': 100+'%'});
+            }
         }
         $.Window.scroll(scrolling).trigger('scroll');
         function scrolling () {
@@ -92,8 +97,8 @@
                                     }*/
                                 break;
                                 case $(this).hasClass('run_opacity_rotate'):
-                                    $(this).css({'opacity': Math.min((scroll_value-($(this).offset().top-w_h_min))/(0.5*w_h),1)});
-                                    $(this).ComCss({'transform':'rotateZ('+360*Math.min((scroll_value-($(this).offset().top-w_h_min))/(0.5*w_h),1)+'deg)'});
+                                    $(this).css({'opacity': Math.min((scroll_value-($(this).offset().top-w_h_min))/(0.35*w_h),1)});
+                                    $(this).ComCss({'transform':'rotateZ('+360*Math.min((scroll_value-($(this).offset().top-w_h_min))/(0.35*w_h),1)+'deg)'});
                                 break;
                                 case $(this).hasClass('run_aftershow'):                                
                                     if(Math.min((scroll_value-($(this).offset().top-w_h_min))/(0.5*w_h),1) >= 0.8 && !$(this).parent().hasClass('show_main')) {
@@ -203,7 +208,9 @@
             function(){
                 $.Body.find('div.light_box');
                 $.light_box_content.hide();
-                $.Body.find('.'+$(this).find('div.work_item_pic img').attr('src').split('images/index/')[1].split('.')[0]+'_').css({'display':'inline-block'});
+                //$(this).find('div.work_item_pic img').attr({'src':$(this).find('div.work_item_pic img').attr('source')});
+                //$.Body.find('.'+$(this).find('div.work_item_pic img').attr('src').split('images/index/')[1].split('.')[0]+'_').css({'display':'inline-block'});
+                $.Body.find('.'+$(this).find('div.work_item_pic img').attr('src').split('images/index/')[1].split('.')[0]+'_').attr({'src':$(this).find('div.work_item_pic img').attr('src').split('.')[0]+'_.jpg' }).css({'display':'inline-block'});
                 $.Body.find('div.light_box').fadeIn(200);
             }
         );
@@ -233,6 +240,9 @@ $(function(){
     $.Wrapper = $.Body.find('div.wrapper');
     $.Loading = $.Body.find('div.loading');
     $.video_box = $.Body.find('.video_box');
+    $("img.lazy").lazyload({
+        effect : "fadeIn"
+    });
     $.Window.load(function(){
         $.Loading.fadeOut(200);
         $.Body.MainDataInIt();
